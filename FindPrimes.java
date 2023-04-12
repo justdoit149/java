@@ -13,6 +13,7 @@ public class FindPrimes {
                 }
             }
         }
+        s.close();
     }
     public static boolean Isprime(int n){
         for(int i = 2; i * i <= n; i++){
@@ -21,5 +22,5 @@ public class FindPrimes {
             }
         }
         return true;
-    }
+    }   
 }

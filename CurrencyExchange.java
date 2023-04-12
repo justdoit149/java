@@ -12,6 +12,6 @@ public class CurrencyExchange {
         exchange = s.nextDouble();
         dollars = euros * exchange / 100;
         System.out.printf("%.2f euros at an exchange rate of %.2f is %.2f U.S. dollars.",euros,exchange,dollars);
-
+        s.close();
     }
 }
