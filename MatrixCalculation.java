@@ -1,4 +1,4 @@
-package edu.nju;
+//package edu.nju;
 import java.util.*;
 /**
  * 实现矩阵的加法、乘法以及控制台输出
