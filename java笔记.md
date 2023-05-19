@@ -21,5 +21,35 @@
 
 ## Java常用类和对象
 
-* Object对象。属于java.lang.Object，默认导入的包。所有类默认都以它为父类（间接的话总能连到它，是树的根。也就是以下这些方法对所有对象均可用）。常用方法如下（这些方法也是可以重写的）。 .toString()转换成字符串对象，返回String。.hashCode()返回int，获取对象的内存地址。.equals(对象)返回boolean，判断两个对象是否相等，默认比较的是内存地址。.getClass()获取对象的类型信息，使用方法为 `Class<?> classType = a.getClass();`
-* 数组对象。可以是基础数据类型也可以是引用数据类型。`String[] names = new String[1005];`或者可以直接大括号初始化。属性.length获取当前数组的容量。二维数组 `String[][] names = new String[1005][10];`或者嵌套大括号初始化。属性nums.length获取行数，nums[0].length获取列数（因为二维数组相当于每一个元素是一个数组）
+### Object对象
+
+* 属于java.lang.Object，默认导入的包。
+* 所有类默认都以它为父类（间接的话总能连到它，是树的根。也就是以下这些方法对所有对象均可用）。常用方法如下（这些方法也是可以重写的）。
+* .toString()转换成字符串对象，返回String。
+* .hashCode()返回int，获取对象的内存地址。
+* .equals(对象)返回boolean，判断两个对象是否相等，默认比较的是内存地址。
+* .getClass()获取对象的类型信息，使用方法为 `Class<?> classType = a.getClass();`
+
+### 数组对象
+
+* 可以是基础数据类型也可以是引用数据类型。`String[] names = new String[1005];`或者可以直接大括号初始化。
+* 属性.length获取当前数组的容量。二维数组 `String[][] names = new String[1005][10];`或者嵌套大括号初始化。属性nums.length获取行数，nums[0].length获取列数（因为二维数组相当于每一个元素是一个数组）
+
+### 字符串
+
+* java.lang.String提供了String类。构建，可以直接 `String str = "sskkk";`还可以把现成的字符数组变成字符串 `String str = new str(ch);//ch是一个字符数组`。
+* 拼接：可以用“+”，且+的左右边会被自动转化为字符串（因此把数字123转换为字符串可以str = 123 + ""，但1 + 2 + “ABC”实际上得到3ABC，因为先计算了前面的加法）；也可以s1.concat(s2)来把s2拼接到s1后面。
+* 比较：是否相等，可以用Object的a.equals(b)；s1.equalsIgnoreCase(s2)忽略大小写判等；a.compareTo(b)返回int，比较两者大小，返回正数则a大，负数则b大，0则相等（从前往后比ascii）；a.compareToIgnoreCase(b)是忽略大小写的比较大小（好像不太常用）。
+* 截取：s.substring(int l, int r)左闭右开，r可以省略（此时是截取到最后），返回一个字符串。分隔：s.split(",")用逗号作为分割符，返回的是一个字符串数组。
+* 替换：s.trim()去掉原来字符串的首尾所有空格，返回字符串。s.replace(s1,s2)把原来的字符串里的s1替换为s2，返回字符串。s.replaceAll(s1,s2)这里字符串1里面的"|"为“或”，表示可以把s1里出现的这些种情况都替换为s2，返回字符串（这里s1相当于一个替换规则）。
+* 大小写转换： s.toLowerCase()将原字符串里的大写字母换成小写；s.toUpperCase()小写替换为大写。若是一些特殊转换（比如首字母大写），可以先substring截取，然后再分段大写或小写转换，然后再用“+”拼接起来。
+* 查找：s.toCharArray()返回char数组，将原来的字符串转换为字符数组，这样方便对其进行修改和查找，改完了再.toString()转回字符串。s.getBytes("UTF-8")按照UTF-8来返回一个字节数组。s.charAt(int index)类似数组下标去查找，只查不改的话可以用这个。s.indexOf(s1)在s里面查找子串s1的位置，返回其第一次遇到的s1的起始位置的值（int index）（如果从后往前找的话可以用s.lastIndexOf(s1)），如果没有则返回-1。s.contains(s1)是查找是否有s1子串，返回boolean，有则true没有false。s.startsWith(s1)是否是s1开头，s.endsWith(s1)是否s1结尾，均是返回boolean类型。s.isEmpty()字符串是否为空。
+* StringBuilder类，用于构建、修改字符串（与StringBuffer类似但有速度优势，因此更常用）。由于常规的拼接需要创建新字符串，故循环多次拼接的话效率很低。可以new一个StringBuilder对象s，然后s.append(s1)拼接，最后s.toString()，这样的效率快很多。s.length()方法获取长度，s.reverse()方法翻转，s.insert(int index, s2)向s的index位置插入字符串s2
+
+### 其它
+
+* 包装类。8种基本数据类型,byte,short,int,long,float,double,char,boolean。这8种不继承Object类，不能new创建对象；而其它的引用数据类型都要继承Object类，能够new创建对象。因此这8种用起来不太方便（难以使用Object的方法等），因此这8种各自对应一种引用数据类型来使用（java.lang里，不需要额外引入）：Byte，Short，Integer，Long，Float，Double，Character，Boolean。这8种成为包装类，可以像对应的基本类型一样使用，也可以使用其它方法。转换：`Integet i1 = Integer.valueOf(i);`或者直接 `Integer i1 = i;`。反着转换的话是 `int i2 = i1.intValue();`或者 `int i2 = i1;`。也就是说可以自动互相转换（自动拆箱）。
+* 日期类。时间戳（获取系统时间）：System.currentTimeMillis()返回一个long类型的整数，从1970.1.1到现在的毫秒数。日期类Date(有两个，java.util和java.sql里都有名为Date的类，此处指前者)：创造出的Date对象直接打印就是当前的时间，但是为了格式化它，我们经常创造一个SimpleDateFormat类的对象sdf（创造方法new的参数是代表时间格式的字符串，即规则）；时间格式：y年，M月，d日（一个月中第几日）/D日（一年中第几日），h小时（12）/H小时（24），m分钟，s秒/S毫秒；然后sdf.format(time)可以将Date类的对象time按照这个规则格式化，返回字符串。sdf.parse(str)可以将符合这个sdf规则的字符串解析成Date对象（注意可以.var可以自动补全）。因此经常创建应该sdf规则，然后去解析字符串成日期，然后对日期类去运算，然后再转回来。Date对象常用方法：date.setTime(时间戳)可以根据时间戳构建date对象；date.getTime()是获取date的时间戳；d1.before(d2)看d1是否早于d2（true或false）（after晚于）。还可以用日历类Calendar（略）。
+* 比较。基本数据类型，双等号比较值；引用数据类型，双等号比较地址（对引用类型的值的比较，应该使用s1.equals(s2)来判断）；且如果是自己定义的类的话可以自己重写equals、hashCode等方法来方便判定。
+
+## Java异常
