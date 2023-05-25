@@ -82,3 +82,30 @@ try{
 * 缓冲区（Buffer）。刚才的读写都是一个一个处理的。想更高效读写可以增加缓冲区。BufferedInputStream和BufferedOutputStream。这两个类的构建方法的参数就分别是刚才输入流和输出流（BufferedInputStream buffIn = new BufferedInputStream(in)）。具体使用方法略（因为对考试而言这个和上一个没多大区别，反正考试不卡时间）。
 * 字符流。想要对读取的数据进行处理。可以先new一个StringBuilder对象ss，然后每次.read()读取的结果强制类型转换成char（在数据前面加(char)）然后ss.append(c)追加上，最后.toString()转换成字符串，可以用分隔等字符串操作。还可以把它.toCharArray()然后逐个写回去。进一步，可以用BufferedReader对象（这个东西构造方法的参数是一个FileReader对象）。可以BufferedReader r = new BufferedReader(new FileReader(f))，其中f是之前打开的文件；或者括号里是new InputStreamReader(System.in)用来实现控制台输入。这个r.readLine()可以读一行然后返回字符串（如果到了最后是null）。与之对应，有BufferedWriter、PrintWriter来写入（PrintWriter的构造方法的参数就是文件f，不需要在创建别的东西了），然后write.println等Print方法（与控制台输出类似，实际上控制台输出就是输出到Systrm.out的）
 * 序列化：把对象变成字节码写入文件；反序列化：将文件中的字节读成对象。ObjectOutputStream。具体使用略。
+* （更简单方便的还可以用Scanner来读取文件）
+
+```java
+import java.io.*;//为了File
+import java.util.*;//Scanner
+public class self1 {
+    public static void main(String[] args) {
+        File f = new File("./data.txt");//先打开文件
+        Scanner scan = null;//声明Scanner对象并初始化
+        try {
+            scan = new Scanner(f);//括号里直接是f表示读取的数据来源为f指向的文件
+            while(true){
+                if(scan.hasNextLine()){//读一行，返回字符串
+                    System.out.println(scan.nextLine());
+                }else{
+                    break;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // new Scanner(f)会有异常
+        }finally{
+            scan.close();
+        } 
+    }
+}
+
+```
